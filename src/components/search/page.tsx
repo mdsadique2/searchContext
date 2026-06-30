@@ -1,5 +1,5 @@
 import { useSearchContext } from './context';
-import { SearchInput } from './searchInput';
+import { SearchInput } from './search-components/searchInput';
 
 export function SearchPage() {
   const ctx = useSearchContext();
