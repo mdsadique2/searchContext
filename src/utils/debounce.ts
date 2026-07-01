@@ -5,7 +5,7 @@ export function debounce(fnToCall, timeout) {
   return function () {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      fnToCall.apply(ctx, [...arguments]);
+      return fnToCall.apply(ctx, [...arguments]);
     }, timeout);
   };
 }

@@ -1,6 +1,5 @@
 // ThemeContext.js
 import { createContext, useContext, useCallback } from 'react';
-import { useDebounce } from '../../hooks/useDebounce';
 import { getHeadLines } from './service';
 
 // 1. Initialize the Context
@@ -15,26 +14,21 @@ export function SearchProvider({ children, config }) {
     ...config,
   };
 
-  const search = useCallback(async (query) => {
-    console.log('---search call', query);
-    const response = await getHeadLines({ query });
-    console.log('=======\n======\n======\n', response);
+  const search = useCallback(async ({query, controller, page}) => {
+    return await getHeadLines({ query, controller, page });
   }, []);
 
   const suggestion = useCallback((query) => {
     console.log('---suggestion call', query);
   }, []);
 
-  const searchDebounced = useDebounce(search, 500);
-  const suggestionDebounced = useDebounce(suggestion, 500);
-  // return <div>wsedrftghb</div>;
 
   // Provide both the current state and the toggle function
   return (
     <SearchContext.Provider
       value={{
-        search: searchDebounced,
-        suggestion: suggestionDebounced,
+        search: search,
+        suggestion: suggestion,
         defaultValues,
       }}
     >
